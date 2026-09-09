@@ -39,6 +39,7 @@ const ListComponent = () => {
       <ul>
         {item.map((element, index) => (
           <ListItemComponent
+            key={element.id}
             id={element.id}
             element={element.name}
             index={index}

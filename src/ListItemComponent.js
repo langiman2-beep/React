@@ -2,7 +2,7 @@ import React from "react";
 
 const ListItemComponent = (props) => {
   return (
-    <li key={props.id}>
+    <li>
       <b>{props.element}</b>
       Индекс: <i>{props.index}</i>
       Ключ-ID: <u>{props.id}</u>
