@@ -41,18 +41,21 @@
   display: grid;
   grid-template-columns: repeat(3, 100px);
   grid-template-rows: repeat(3, 100px);
-  gap: 5px;
+  gap: 15px;
+  padding: 15px;
+  background-color: #222222;
+  border-radius: 12px;
+  animation: boardBreath 2s infinite ease-in-out;
 }
 
 .kletka {
-  display: flex;
-  justify-content: center;
-  align-items: center;
-  font-size: 24px;
+  width: 100px;
+  height: 100px;
+  font-size: 36px;
   font-weight: bold;
-  cursor: pointer;
-  background: #fff;
-  border: 2px solid #333;
+  background-color: #ffffff;
+  border: none;
+  border-radius: 8px;
 }
 
 .blink-text {
@@ -69,6 +72,320 @@
 
 .game-container {
   display: flex;
-  gap: 50px;
+  justify-content: space-between;
   align-items: flex-start;
+  gap: 40px;
+  max-width: 1200px;
+  margin: 0 auto;
+  padding: 20px;
+}
+
+.score-table-container {
+  flex: 1; /* Таблица забирает всё оставшееся место справа */
+  min-width: 350px;
+}
+.score-table-container table {
+  width: 100%;
+  border-collapse: separate;
+  border-spacing: 15px 10px; /* Расталкиваем ячейки и заголовки таблицы, чтоб не слипались */
+}
+
+.score-table-container th,
+.score-table-container td {
+  text-align: center;
+  padding: 8px;
+}
+
+.game-zone {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  gap: 8px;
+}
+
+.kletka:not(:disabled):hover {
+  transform: scale(1.08);
+  background-color: #f0f8ff;
+  box-shadow: 0 4px 15px rgba(0, 0, 0, 0.15);
+  cursor: pointer;
+}
+
+@keyframes boardBreath {
+  0% {
+    box-shadow:
+      0 0 20px rgba(0, 123, 255, 0.4),
+      inset 0 0 10px rgba(0, 123, 255, 0.2);
+  }
+  50% {
+    box-shadow:
+      0 0 50px rgba(0, 123, 255, 1),
+      inset 0 0 25px rgba(0, 123, 255, 0.6); /* Мега-вспышка наружу и внутрь доски! */
+  }
+  100% {
+    box-shadow:
+      0 0 20px rgba(0, 123, 255, 0.4),
+      inset 0 0 10px rgba(0, 123, 255, 0.2);
+  }
+}
+/* Выстраиваем кнопки управления в ряд */
+.controls-row {
+  display: flex;
+  gap: 15px;
+  justify-content: center;
+  width: 100%;
+}
+
+/* Общие стили для кнопок Старт и Стоп */
+.start-btn,
+.stop-btn {
+  padding: 10px 25px;
+  font-size: 18px;
+  font-weight: bold;
+  border: none;
+  border-radius: 6px;
+  cursor: pointer;
+  transition:
+    transform 0.1s ease,
+    background-color 0.2s ease;
+}
+
+/* Боевая зелёная кнопка Старт */
+.start-btn {
+  background-color: #28a745;
+  color: white;
+}
+
+.start-btn:not(:disabled):hover {
+  background-color: #218838;
+  transform: scale(1.05);
+}
+
+/* Сигнальная красная кнопка Стоп */
+.stop-btn {
+  background-color: #dc3545;
+  color: white;
+}
+
+.stop-btn:hover {
+  background-color: #c82333;
+  transform: scale(1.05);
+}
+
+/* Стиль для заблокированной кнопки Старт */
+.start-btn:disabled {
+  background-color: #6c757d;
+  cursor: not-allowed;
+  transform: none;
+}
+
+.vs-text {
+  margin: 5px 0;
+}
+
+.setup-row {
+  display: flex;
+  align-items: center;
+  justify-content: center;
+  gap: 10px;
+}
+.setup-hint-blink {
+  font-size: 14px; /* Уменьшаем шрифт подсказки */
+  color: #ffc107; /* Делаем её приятно жёлтой */
+  font-weight: bold;
+  animation: hintPulse 1.5s infinite ease-in-out; /* Запускаем мягкую пульсацию */
+}
+
+/* Математика мягкой пульсации подсказки */
+@keyframes hintPulse {
+  0% {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+  50% {
+    opacity: 1;
+    transform: scale(1.02);
+  }
+  100% {
+    opacity: 0.4;
+    transform: scale(0.98);
+  }
+}
+.table-header-block {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 15px;
+  margin-bottom: 15px;
+}
+
+.table-title {
+  background-color: #ffeb3b; /* Яркий жёлтый фон */
+  color: #111111; /* Контрастный тёмный текст */
+  padding: 6px 12px;
+  border-radius: 4px;
+  font-size: 20px;
+  font-weight: bold;
+  text-transform: uppercase;
+  box-shadow: 0 0 10px rgba(255, 235, 59, 0.5);
+  animation: titleFlicker 2s infinite alternate; /* Эффект мерцания старой вывески */
+}
+
+/* Эффект мерцания неоновой жёлтой вывески */
+@keyframes titleFlicker {
+  0%,
+  100% {
+    opacity: 1;
+    box-shadow: 0 0 10px rgba(255, 235, 59, 0.6);
+  }
+  50% {
+    opacity: 0.85;
+    box-shadow: 0 0 4px rgba(255, 235, 59, 0.2);
+  }
+}
+
+/* Стильная кнопка сброса возле заголовка */
+.reset-btn {
+  background-color: #6c757d;
+  color: white;
+  border: none;
+  padding: 6px 12px;
+  font-size: 13px;
+  border-radius: 4px;
+  cursor: pointer;
+  transition: background-color 0.2s;
+}
+
+.reset-btn:hover {
+  background-color: #5a6268;
+}
+
+/* Крупный жирный шрифт для твоего имени (Бирюзовый неон) */
+.player-name-highlight {
+  font-size: 26px;
+  font-weight: 900;
+  color: #00f3ff;
+  text-shadow: 0 0 10px rgba(0, 243, 255, 0.4);
+}
+
+/* Разделитель матча */
+.vs-span {
+  font-size: 20px;
+  font-weight: bold;
+  color: #aaaaaa;
+  margin: 0 10px;
+}
+
+/* Крупный шрифт для машины (Кибер-красный) */
+.comp-name-highlight {
+  font-size: 26px;
+  font-weight: 900;
+  color: #ff0055;
+  text-shadow: 0 0 10px rgba(255, 0, 85, 0.4);
+}
+
+/* Создаем точку отсчета для абсолютной позиции кнопки */
+.relative-zone {
+  position: relative;
+}
+
+/* Огромная, переливающаяся и пульсирующая кнопка ИИ слева от доски */
+.ai-toggle-btn {
+  position: absolute;
+  left: -220px; /* Выносим кнопку жестко влево от доски */
+  top: 180px; /* Центрируем её по высоте относительно поля */
+  width: 180px;
+  height: 60px;
+  font-size: 16px;
+  font-weight: 900;
+  text-transform: uppercase;
+  color: white;
+  border: none;
+  border-radius: 12px;
+  cursor: pointer;
+
+  /* Эффект переливания: сочный градиент */
+  background: linear-gradient(45deg, #ff0055, #00f3ff, #ffeb3b, #ff0055);
+  background-size: 400% 400%;
+  animation:
+    aiGradientShift 4s ease infinite,
+    aiNeonPulse 1.5s infinite ease-in-out;
+  transition: transform 0.2s;
+}
+
+/* Эффект плавного переливания цветов градиента */
+@keyframes aiGradientShift {
+  0% {
+    background-position: 0% 50%;
+  }
+  50% {
+    background-position: 100% 50%;
+  }
+  100% {
+    background-position: 0% 50%;
+  }
+}
+
+/* Эффект яростной пульсации широкой неоновой подсветки */
+@keyframes aiNeonPulse {
+  0% {
+    box-shadow:
+      0 0 15px rgba(0, 243, 255, 0.4),
+      0 0 30px rgba(255, 0, 85, 0.2);
+    transform: scale(1);
+  }
+  50% {
+    box-shadow:
+      0 0 35px rgba(0, 243, 255, 0.9),
+      0 0 60px rgba(255, 0, 85, 0.6); /* Мега-вспышка наружу! */
+    transform: scale(1.05); /* Кнопка слегка увеличивается в такт пульсации */
+  }
+  100% {
+    box-shadow:
+      0 0 15px rgba(0, 243, 255, 0.4),
+      0 0 30px rgba(255, 0, 85, 0.2);
+    transform: scale(1);
+  }
+}
+
+/* Ховер-эффект: кнопка реагирует на наведение */
+.ai-toggle-btn:not(:disabled):hover {
+  filter: brightness(1.2);
+}
+
+/* Стиль для заблокированной кнопки во время игры (она блекнет и перестает мигать) */
+.ai-toggle-btn:disabled {
+  background: #444444 !important;
+  color: #888888;
+  box-shadow: none !important;
+  animation: none !important;
+  transform: none !important;
+  cursor: not-allowed;
+}
+
+/* Огромный аркадный таймер под кнопкой ИИ */
+.countdown-timer {
+  position: absolute;
+  left: -220px; /* Выравниваем ровно по левому краю под кнопкой */
+  top: 260px; /* Опускаем чуть ниже кнопки */
+  width: 180px;
+  text-align: center;
+  font-size: 72px; /* Мега-огромный шрифт! */
+  font-weight: 900;
+  color: #ff0055; /* Агрессивный кибер-красный цвет */
+  text-shadow:
+    0 0 20px rgba(255, 0, 85, 0.8),
+    0 0 40px rgba(255, 0, 85, 0.4);
+  font-family: "Courier New", Courier, monospace; /* Настоящий цифровой стиль */
+  animation: timerBlink 1s infinite steps(1); /* Счётчик будет яростно мигать каждую секунду */
+}
+
+/* Эффект экстренного мигания времени */
+@keyframes timerBlink {
+  0%,
+  100% {
+    opacity: 1;
+  }
+  50% {
+    opacity: 0.5;
+  }
 }
