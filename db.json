@@ -1,0 +1,47 @@
+{
+  "todos": [
+    {
+      "id": "1",
+      "title": "Купить инвертор для дежурства",
+      "description": "Посмотреть на Староконном рынке или заказать в интернете",
+      "checked": false,
+      "creationDate": "03.10.2026"
+    },
+    {
+      "title": "ееггегкг",
+      "description": "Опис завдання",
+      "checked": false,
+      "creationDate": "05.10.2026",
+      "id": "MZl5J7_POSE"
+    },
+    {
+      "title": "еггегег",
+      "description": "Опис завдання",
+      "checked": false,
+      "creationDate": "05.10.2026",
+      "id": "Vqk1044DRTE"
+    },
+    {
+      "title": "еккнкн",
+      "description": "Опис завдання",
+      "checked": false,
+      "creationDate": "05.10.2026",
+      "id": "rnYjyhJ2QEU"
+    },
+    {
+      "title": "араркок",
+      "description": "Опис завдання",
+      "checked": false,
+      "creationDate": "05.10.2026",
+      "id": "pFnu8yX8PhE"
+    },
+    {
+      "title": "врвоео",
+      "description": "Опис завдання",
+      "checked": false,
+      "creationDate": "05.10.2026",
+      "id": "g5uaxwocDCc"
+    }
+  ],
+  "$schema": "./node_modules/json-server/schema.json"
+}
